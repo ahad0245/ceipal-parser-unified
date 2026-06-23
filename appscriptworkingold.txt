@@ -1,0 +1,64 @@
+const FOLDER_ID = "1A6p6AzPrCJgW0JkaUMVCO_uVT5aCMDbe";
+const SECRET_KEY = "hands_hr_secret_123";
+
+function doPost(e) {
+  try {
+    const body = JSON.parse(e.postData.contents);
+
+    if (!body.secret || body.secret !== SECRET_KEY) {
+      return jsonResponse({
+        success: false,
+        error: "Unauthorized request"
+      });
+    }
+
+    if (!body.fileName || !body.mimeType || !body.base64File) {
+      return jsonResponse({
+        success: false,
+        error: "Missing fileName, mimeType, or base64File"
+      });
+    }
+
+    const folder = DriveApp.getFolderById(FOLDER_ID);
+
+    const fileBytes = Utilities.base64Decode(body.base64File);
+
+    const blob = Utilities.newBlob(
+      fileBytes,
+      body.mimeType,
+      body.fileName
+    );
+
+    const file = folder.createFile(blob);
+
+    file.setSharing(
+      DriveApp.Access.ANYONE_WITH_LINK,
+      DriveApp.Permission.VIEW
+    );
+
+    const fileId = file.getId();
+
+    const viewUrl = `https://drive.google.com/file/d/${fileId}/view?usp=sharing`;
+    const downloadUrl = `https://drive.google.com/uc?id=${fileId}&export=download`;
+
+    return jsonResponse({
+      success: true,
+      fileId: fileId,
+      viewUrl: viewUrl,
+      downloadUrl: downloadUrl,
+      fileName: body.fileName
+    });
+
+  } catch (error) {
+    return jsonResponse({
+      success: false,
+      error: error.toString()
+    });
+  }
+}
+
+function jsonResponse(data) {
+  return ContentService
+    .createTextOutput(JSON.stringify(data))
+    .setMimeType(ContentService.MimeType.JSON);
+}

@@ -1,0 +1,8 @@
+requests
+schedule
+python-dotenv
+pymongo
+pdfplumber
+pytesseract
+Pillow
+python-docx

@@ -1,0 +1,8 @@
+.env
+envold.txt
+.vercel/
+__pycache__/
+*.pyc
+service-account.json
+*.log
+failedcandidate.txt

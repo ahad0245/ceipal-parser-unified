@@ -1,0 +1,9 @@
+fastapi
+python-dotenv
+requests
+schedule
+pymongo
+pdfplumber
+pytesseract
+Pillow
+python-docx
