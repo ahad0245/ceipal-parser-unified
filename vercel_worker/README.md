@@ -46,7 +46,7 @@ Vercel wrapper env vars:
 - `VERCEL_MAX_RESTART_ATTEMPTS` - default `3`
 - `VERCEL_RESTART_DELAY_SECONDS` - default `15`
 - `VERCEL_ALERT_COOLDOWN_MINUTES` - default `120`
-- `VERCEL_CRON_SECRET` - for manual `/api/cron` or `/api/status` access
+- `VERCEL_CRON_SECRET` - for manual `/cron` or `/status` access
 - `ALERT_TO_EMAIL` - default `abdulahad@i8is.com`
 
 SMTP env vars for alerts:
@@ -72,4 +72,4 @@ For port `465`, the worker uses SSL automatically. For port `587`, it uses START
 
 ## Vercel Hobby note
 
-Vercel Hobby only allows one cron execution per day. The current `vercel.json` is set to run daily at `08:00 UTC`. If you need every 8 hours, either upgrade to Pro or remove Vercel Cron and use an external scheduler to call `/api/cron`.
+Vercel Hobby only allows one cron execution per day. The current `vercel.json` is set to run daily at `08:00 UTC`. If you need every 8 hours, either upgrade to Pro or remove Vercel Cron and use an external scheduler to call `/cron`.

@@ -28,8 +28,8 @@ def root() -> JSONResponse:
         {
             "service": "ceipal-vercel-worker",
             "status": "ok",
-            "cron_path": "/api/cron",
-            "status_path": "/api/status",
+            "cron_path": "/cron",
+            "status_path": "/status",
         }
     )
 
