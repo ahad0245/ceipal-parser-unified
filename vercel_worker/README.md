@@ -5,7 +5,7 @@ This folder contains the Vercel-only wrapper for the existing `ceipal_inline_res
 ## What it does
 
 - Runs the same CEIPAL -> MongoDB -> Apps Script upload -> parse flow
-- Triggers on Vercel Cron every 8 hours
+- Triggers on Vercel Cron once per day on Hobby (`08:00 UTC`)
 - Retries the worker automatically inside the same invocation
 - Sends a failure email to `abdulahad@i8is.com` after repeated failures
 
@@ -69,3 +69,7 @@ For port `465`, the worker uses SSL automatically. For port `587`, it uses START
 ## Important limitation
 
 `pytesseract` needs a system Tesseract binary. Vercel usually does not provide that binary. PDF text extraction still works through `pdfplumber`, but OCR fallback may fail unless you move OCR to an external service.
+
+## Vercel Hobby note
+
+Vercel Hobby only allows one cron execution per day. The current `vercel.json` is set to run daily at `08:00 UTC`. If you need every 8 hours, either upgrade to Pro or remove Vercel Cron and use an external scheduler to call `/api/cron`.
